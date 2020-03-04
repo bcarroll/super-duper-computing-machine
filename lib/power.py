@@ -1,23 +1,25 @@
 from time import sleep
 
-#import RPi.GPIO as GPIO
 from threading import Thread
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
-import random
-class GPIO():
-    BCM = 0
-    IN = 0
-    def setmode(mode):
-        logging.debug('GPIO.setmode() called')
-        pass
-    def setup(pin, direction):
-        logging.debug('GPIO.setup() called')
-        pass
-    def input(pin):
-        logging.debug('GPIO.input() called')
-        return random.randrange(0,1)
+try:
+    import RPi.GPIO as GPIO
+except:
+    import random
+    class GPIO():
+        BCM = 0
+        IN = 0
+        def setmode(mode):
+            logging.debug('GPIO.setmode() called')
+            pass
+        def setup(pin, direction):
+            logging.debug('GPIO.setup() called')
+            pass
+        def input(pin):
+            logging.debug('GPIO.input() called')
+            return random.randrange(0,1)
 
 class PowerMonitor(Thread):
     daemon   = True
