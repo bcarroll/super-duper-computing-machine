@@ -1,13 +1,15 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+
+from conf.config import Config
+
 from blueprints.base import base
 from blueprints.api.media import api_media
 from blueprints.api.power import api_power, startPowerMonitor
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
-
+app.config.from_object(Config)
 app.register_blueprint(base)
 app.register_blueprint(api_media)
 app.register_blueprint(api_power)
