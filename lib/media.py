@@ -1,37 +1,41 @@
 import os
 import sys
+from conf.config import Media
+import logging
 
-audio_dir = '/media/audio'
-video_dir = '/media/video'
-picture_dir = '/media/pictures'
+logger = logging.getLogger(__name__)
 
-audio_media = ['mp3', 'flac']
-video_media = ['mp4', 'avi', 'm4v', 'mpg']
-picture_media = ['png', 'jpg']
+audio_dir = Media.audio_dir
+video_dir = Media.video_dir
+picture_dir = Media.picture_dir
+
+audio_media = Media.audio_media
+video_media = Media.video_media
+picture_media = Media.picture_media
 
 def get_files_by_type(dir, ext):
-    print('scanning ' + dir + ' for files with extension: ' + ext)
+    logger.debug('scanning ' + dir + ' for files with extension: ' + ext)
     media_type = {}
     media_type[ext] = []
     for root, dirs, files in os.walk(dir):
         for file in files:
             if file.endswith(ext):
-                print('found ' + file)
+                logger.debug('found ' + file)
                 media_type[ext].append(os.path.join(root, file))
     return media_type
 
 def get_all_media():
     media_files = {}
     audio_media = get_all_audio_media()
-    if audio_media is not None:
+    if len(audio_media).keys > 0:
        media_files.update(audio_media)
     
     video_media = get_all_video_media()
-    if video_media is not None:
+    if len(video_media).keys > 0:
        media_files.update(video_media)
     
     picture_media = get_all_picture_media()
-    if picture_media is not None:
+    if len(picture_media).keys > 0:
        media_files.update(picture_media)
     
     return media_files
@@ -47,7 +51,7 @@ def get_all_audio_media():
     if len(media_files['audio'].keys()) > 0:
         return media_files
     else:
-        return None
+        return {}
 
 def get_all_video_media():
     media_files = {
@@ -60,7 +64,7 @@ def get_all_video_media():
     if len(media_files['video'].keys()) > 0:
         return media_files
     else:
-        return None
+        return {}
 
 def get_all_picture_media():
     media_files = {
@@ -69,8 +73,13 @@ def get_all_picture_media():
     for ext in picture_media:
         picture_ext_files = get_files_by_type(picture_dir, ext)
         if len(picture_ext_files[ext]) > 0:
+            logger.debug('Adding image files in %s to dict' % picture_dir)
             media_files['picture'].update(picture_ext_files)
+        else:
+            logger.debug('No image files found in %s' % picture_dir)
     if len(media_files['picture'].keys()) > 0:
+        logger.debug('Returning dict with image files in %s' % picture_dir)
         return media_files
     else:
-        return None
+        logger.debug('Returning None')
+        return {}

@@ -1,9 +1,12 @@
+import logging
 from flask import Blueprint
 from flask import render_template
 from flask import abort
 from flask import jsonify
 from jinja2 import TemplateNotFound
 from lib.power import PowerMonitor
+
+logger = logging.getLogger(__name__)
 
 api_power = Blueprint('api_power', __name__, template_folder='templates')
 
@@ -16,6 +19,7 @@ def api_get_power_health():
 
 @api_power.route('/api/v1/power/stop', methods=['POST'])
 def api_stop_power_monitor_thread():
+    logger.debug('Stopping PowerMonitor thread')
     POWER_MONITOR_THREAD.stop()
     pwr_mon_th_stat = 'Unknown'
     if POWER_MONITOR_THREAD.isAlive():
@@ -26,5 +30,6 @@ def api_stop_power_monitor_thread():
 
 # Start PowerMonitor Thread
 def startPowerMonitor(config):
+    logger.debug('Starting PowerMonitor thread')
     config['POWER_MONITOR_THREAD'] = POWER_MONITOR_THREAD
     config['POWER_MONITOR_THREAD'].start()

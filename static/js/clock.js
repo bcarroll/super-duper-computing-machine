@@ -46,10 +46,12 @@ function getTime(clock_hours, format, return_time){
     }
 
     if (current_time['clock_hours'] >= 12){
-        if (current_time['clock_hours'] > 12){
+        if (current_time['hour'] > 12){
             current_time['hour'] = current_time['hour'] - 12;
-        }
-        current_time['time_of_day'] = 'pm';
+            current_time['time_of_day'] = 'pm';
+        } else {
+            current_time['time_of_day'] = 'am';
+	}
     }
 
     if (return_time){

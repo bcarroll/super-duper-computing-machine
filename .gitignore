@@ -5,3 +5,4 @@ venv
 *.log
 *.db
 
+logs/api.log logs/system.log logs/system.log.1
