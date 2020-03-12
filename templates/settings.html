@@ -1,12 +1,12 @@
 <i class="fas fa-chevron-left fa-2x content-navbutton" id="back"></i>
 <span id="content-header">Settings</span>
-<p>
-<span class="setting-button" id="hardware_info">
-System
-</span>
-</p>
-<p>
-<span class="setting-button" id="memory_info">
+
+<fieldset class="setting-button">
+    <legend>System</legend>
+CPU: {{ hw['count'] }}x {{ hw['bits'] }}bit {{ hw['arch'] }} {{ hw['brand'] }}<br/>
+Python: {{ hw['python_version'] }}
+</fieldset>
+
+<fieldset class="setting-button">
 Memory
-</span>
-</p>
+</fieldset>
