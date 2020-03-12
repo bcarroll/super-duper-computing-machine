@@ -4,8 +4,20 @@ from threading import Thread
 
 logger = logging.getLogger(__name__)
 
-import RPi.GPIO as GPIO
-    
+try:
+    import RPi.GPIO as GPIO
+except:
+    logger.warning('Error importing RPi.GPIO.  RPi.GPIO will be emulated...')
+    class GPIO():
+        BOARD = None
+        IN = None
+        def setmode(*args):
+            pass
+        def setup(*args):
+            pass
+        def input(*args):
+            pass
+
 class PowerMonitor(Thread):
     daemon   = True
     powerLED = 35
