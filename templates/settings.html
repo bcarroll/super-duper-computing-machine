@@ -1,12 +1,64 @@
-<i class="fas fa-chevron-left fa-2x content-navbutton" id="back"></i>
-<span id="content-header">Settings</span>
+<!doctype html>
+<!--
+    https://canvas-gauges.com/documentation/user-guide/configuration
+-->
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/static/css/app.css"/>
+    </head>
+    <body>
+        <i class="fas fa-chevron-left fa-2x content-navbutton" id="back"></i>
+        <span id="content-header">System</span>
+        <p></p>
+        <fieldset class="setting-button">
+            <legend>System</legend>
+            <div>
+                CPU: {{ hw['count'] }}x {{ hw['bits'] }}bit {{ hw['arch'] }} {{ hw['brand'] }}
+            </div>
+            <div>
+                Python: {{ hw['python_version'] }}
+            </div>
+            <p>
+                <canvas id="cpu_usage"></canvas>
+            </p>
+        </fieldset>
 
-<fieldset class="setting-button">
-    <legend>System</legend>
-CPU: {{ hw['count'] }}x {{ hw['bits'] }}bit {{ hw['arch'] }} {{ hw['brand'] }}<br/>
-Python: {{ hw['python_version'] }}
-</fieldset>
-
-<fieldset class="setting-button">
-Memory
-</fieldset>
+        <fieldset class="setting-button">
+            <legend>Memory</legend>
+            <div>
+                Total: <span id="mem_total"></span>
+            </div>
+            <div>
+                Available: <span id="mem_avail"></span>
+            </div>
+            <p>
+                <canvas id="mem_usage"></canvas>
+            </p>
+        </fieldset>
+        <script src="/static/js/jquery-3.4.1.min.js"></script>
+        <script src="/static/js/gauge.min.js"></script>
+        <script src="/static/js/app.js"></script>
+        <script>
+            var cpu_usage_canvas = document.getElementById('cpu_usage');
+            var cpu_usage_gauge = linearGauge(cpu_usage_canvas, 'CPU Usage');
+            cpu_usage_gauge.draw();
+            setInterval(function(){
+                $.get("/api/v1/hardware/cpu", function(response){
+                    cpu_usage_gauge.value = response.total;
+                });
+            }, 500);
+        </script>
+        <script>
+            var mem_usage_canvas = document.getElementById('mem_usage');
+            var mem_usage_gauge = linearGauge(mem_usage_canvas, 'Memory Usage');
+                mem_usage_gauge.draw();
+                setInterval(function(){
+                    $.get("/api/v1/hardware/memory", function(response){
+                        mem_usage_gauge.value = response.percent;
+                        $('#mem_total').text(to_human_readable(response.total));
+                        $('#mem_avail').text(to_human_readable(response.available));
+                    });
+                }, 500);
+            </script>
+    </body>
+</html>

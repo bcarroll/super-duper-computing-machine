@@ -1,5 +1,6 @@
 alembic==1.4.1
 Click==7.0
+comtypes==1.1.7
 fake-rpigpio==0.1.1
 Flask==1.1.1
 Flask-Migrate==2.5.2
@@ -11,8 +12,8 @@ MarkupSafe==1.1.1
 psutil==5.7.0
 py-cpuinfo==5.0.0
 python-dateutil==2.8.1
-RPi.GPIO==0.7.0
-RPi.version==1.2
+python-editor==1.0.4
+pywifi==1.1.12
 six==1.14.0
 SQLAlchemy==1.3.13
 Werkzeug==1.0.0

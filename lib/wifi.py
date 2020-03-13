@@ -1,13 +1,15 @@
 import logging
 from time import sleep
 from threading import Thread
+import pywifi
 
 logger = logging.getLogger(__name__)
  
 class WifiMonitor(Thread):
+    _wifi_status = ['DISCONNECTED', 'SCANNING', 'INACTIVE', 'CONNECTING', 'CONNECTED']
     daemon   = True
     stop     = False
-    status   = 'not connected'
+    status   = 'INACTIVE'
 
     def run(self):
         logger.debug('WifiMonitor thread started')

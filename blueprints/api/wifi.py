@@ -14,7 +14,8 @@ WIFI_MONITOR_THREAD = WifiMonitor()
 
 @api_wifi.route('/api/v1/wifi/')
 def api_get_wifi_status():
-    return jsonify(WIFI_MONITOR_THREAD.getWifiStatus())
+    status = WIFI_MONITOR_THREAD.getWifiStatus()
+    return jsonify(status)
 
 @api_wifi.route('/api/v1/wifi/stop', methods=['POST'])
 def api_stop_wifi_monitor_thread():

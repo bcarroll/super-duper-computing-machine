@@ -1,6 +1,7 @@
 
 from re import sub
 from types import FunctionType
+import psutil
 
 class MemoryStats():
 	def __init__(self):
@@ -42,7 +43,7 @@ class MemoryStats():
 				# ... when the class instance is initialied
 				if key not in self.statKeys:
 					self.statKeys.append(key)
-
+		
 if __name__ == '__main__':
 	meminfo = MemoryStats()
 	print(dir(meminfo))
