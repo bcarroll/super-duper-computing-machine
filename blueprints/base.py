@@ -15,6 +15,18 @@ def index():
 def icons():
     return render_template('icons.html', config=Interface.config)
 
+@base.route('/audio')
+def audio():
+    return render_template('audio.html')
+
+@base.route('/video')
+def video():
+    return render_template('video.html')
+
+@base.route('/image')
+def image():
+    return render_template('image.html')
+
 @base.route('/settings')
 def settings():
     return render_template('settings.html', hw=get_cpu_info())

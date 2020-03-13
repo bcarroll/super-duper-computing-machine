@@ -8,6 +8,21 @@ $('#settings-button').click(function (e){
 	$('#content').attr("src", "/settings");
 });
 
+$('#audio-button').click(function (e){
+	e.preventDefault();
+	$('#content').attr("src", "/audio");
+});
+
+$('#video-button').click(function (e){
+	e.preventDefault();
+	$('#content').attr("src", "/video");
+});
+
+$('#image-button').click(function (e){
+	e.preventDefault();
+	$('#content').attr("src", "/image");
+});
+
 function to_human_readable(val){
 	if (val > 1024*1024*1024){
 		return (val/1024/1024/1024).toFixed(2) + " GB";
